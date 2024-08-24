@@ -1,0 +1,9 @@
+## ignorando a pasta do projeto derby
+db-derby-10.17.1.0-bin/
+
+## ignorando arquivo de log
+derby.log
+
+## ignorando pastas e arquivos 
+## que deve ser criada durante o estudo
+getstart/
