@@ -1,0 +1,31 @@
+
+services:
+  opewebui:
+    container_name: open-webui
+    hostname: open-webui
+    image: ghcr.io/open-webui/open-webui:main
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - 3000:8080
+    networks:
+      - net_ollama
+    volumes:
+      - open-webui:/app/backend/data
+    environment:
+      TZ: "America/Sao_Paulo"
+      WEBUI_AUTH: false
+      OLLAMA_BASE_URL: http://ollama:11434
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['all']
+              capabilities: [gpu]
+
+networks:
+  net_ollama:
+
+volumes:
+   open-webui:

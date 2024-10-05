@@ -1,0 +1,47 @@
+
+services:
+  ollama:
+    container_name: ollama
+    hostname: ollama
+    image: ollama/ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_ORIGINS=*
+    expose:
+      - 11434/tcp
+    ports:
+      - "11434:11434"
+    networks:
+      - net_ollama
+    volumes:
+      - vol_ollama:/root/.ollama
+    command: serve
+    deploy:
+      resources:
+        limits:
+          cpus: '6'
+          memory: 16g
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['all']
+              capabilities: [gpu]
+              
+#  elastic:
+#    container_name: elastic
+#    hostname: elastic
+#    image: elasticsearch:8.15.0
+#    environment:
+#      - xpack.security.http.ssl.enabled=false
+#      - xpack.security.enabled=false
+#      - discovery.type=single-node
+#    ports:
+#      - "9200:9200"
+#    networks:
+#      - net_ollama
+
+networks:
+  net_ollama:
+
+volumes:
+  vol_ollama:
